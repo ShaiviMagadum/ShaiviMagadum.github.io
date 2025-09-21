@@ -1,0 +1,733 @@
+<!--
+Project: Net Neutrality - Multi-page Website
+Files contained below (copy each section into its own file in your GitHub Pages repo):
+  - index.html
+  - data.html
+  - networks.html
+  - politics.html
+  - game.html
+  - styles.css
+  - script.js
+
+All pages use the Fira Sans Extra Condensed font and a consistent light-blue / navy theme.
+-->
+
+
+===== FILE: styles.css =====
+/* styles.css - shared across all pages */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;600&display=swap');
+:root{
+  --bg: #e6f2ff;
+  --nav: #001f4d;
+  --nav-2: #003366;
+  --accent: #cce0ff;
+  --text: #001f4d;
+  --card-shadow: 0 8px 24px rgba(0,31,77,0.08);
+  --radius: 12px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:'Fira Sans Extra Condensed', sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+header.site-hero{
+  background:linear-gradient(90deg,var(--nav),var(--nav-2));
+  color:white;
+  padding:28px 18px;
+  text-align:center;
+}
+header.site-hero h1{margin:0;font-size:2.4rem;letter-spacing:1px}
+header.site-hero p{margin:6px 0 0;opacity:0.9}
+nav.topnav{
+  display:flex;gap:12px;justify-content:center;padding:10px 12px;background:var(--nav-2);
+}
+nav.topnav a{color:white;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600}
+nav.topnav a.active, nav.topnav a:hover{background:var(--accent);color:var(--nav)}
+.container{max-width:1100px;margin:26px auto;padding:0 18px}
+.card{background:white;border-radius:var(--radius);box-shadow:var(--card-shadow);padding:18px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+h2{color:var(--nav);margin-top:6px}
+ul.vocab{columns:2;list-style:none;padding:0;margin:0}
+ul.vocab li{padding:6px 0}
+.highlight{background:var(--accent);padding:12px;border-left:6px solid var(--nav);border-radius:6px}
+svg.illustration{width:100%;height:auto;display:block}
+.footer{background:var(--nav);color:white;padding:14px;text-align:center;margin-top:26px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--nav);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+.btn.alt{background:transparent;border:2px solid var(--nav);color:var(--nav)}
+.small{font-size:0.9rem}
+.code{background:#f6fbff;border-radius:8px;padding:12px;font-family:monospace;font-size:0.95rem;overflow:auto}
+.note{font-size:0.95rem;color:#083058}
+/* Game canvas */
+.game-stage{display:flex;gap:18px;align-items:flex-start}
+.canvas-wrap{flex:1}
+.panel{width:320px}
+@media (max-width:760px){
+  nav.topnav{flex-wrap:wrap}
+  ul.vocab{columns:1}
+  .game-stage{flex-direction:column}
+  .panel{width:100%}
+}
+
+
+===== FILE: script.js =====
+/* script.js - shared helpers */
+(function(){
+  // highlight active nav link
+  function setActiveNav(){
+    const navlinks = document.querySelectorAll('nav.topnav a');
+    navlinks.forEach(a => {
+      try{ if(location.pathname.endsWith(a.getAttribute('href')) || (location.pathname.endsWith('/') && a.getAttribute('href')==='index.html')){
+        a.classList.add('active');
+      } else a.classList.remove('active') }catch(e){}
+    })
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setActiveNav);
+  else setActiveNav();
+
+  // simple tooltip helper
+  window.tooltip = function(text){
+    const t = document.createElement('div');
+    t.className='card';t.style.position='fixed';t.style.right='18px';t.style.bottom='18px';t.style.width='260px';t.style.zIndex=9999;
+    t.innerHTML = '<strong>Tip</strong><p class="small">'+text+'</p>';
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),6000);
+  }
+})();
+
+
+===== FILE: index.html =====
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Net Neutrality — Shaivi Magadum</title>
+  <link href="styles.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-hero">
+    <h1>Shaivi Magadum</h1>
+    <p>Net Neutrality — tech, data, and civic implications</p>
+  </header>
+  <nav class="topnav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="data.html">Unit 1: Data</a>
+    <a href="networks.html">Unit 2: Networks</a>
+    <a href="politics.html">Politics</a>
+    <a href="game.html">Interactive Game</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Welcome</h2>
+      <p class="note">After high school I want to go into <strong>molecular biology</strong>, <strong>biotechnology</strong>, or <strong>computer science</strong>. This project connects those interests with computing concepts, data, and civic engagement.</p>
+      <div class="grid">
+        <div>
+          <h3>What this site does</h3>
+          <p>Explains Unit 1 and Unit 2 vocabulary, shows visual diagrams, and demonstrates net neutrality through interactive examples and a small web game that simulates how ISPs can affect traffic.</p>
+        </div>
+        <div>
+          <h3>Why Net Neutrality matters</h3>
+          <p>It preserves open access, fosters innovation, and prevents companies from unfairly controlling which content reaches users.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Featured illustrations</h2>
+      <p class="small">Below are original SVG illustrations included directly in the page (also used on subpages).</p>
+      <div class="grid">
+        <div class="card">
+          <h4>Analog vs Digital</h4>
+          <!-- small inline SVG representing analog (wave) & digital (steps) -->
+          <svg class="illustration" viewBox="0 0 800 200" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#0099ff"/>
+                <stop offset="1" stop-color="#001f4d"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="800" height="200" fill="#f7fbff" rx="12"/>
+            <path d="M10 140 C60 80,140 160,200 100 C260 40,340 140,400 80 C460 20,540 140,600 100 C660 60,740 140,790 100" fill="none" stroke="#0077cc" stroke-width="3" opacity="0.9" />
+            <g stroke="#003355" stroke-width="4">
+              <path d="M10 160 L70 160 L70 120 L130 120 L130 160 L190 160 L190 100 L250 100 L250 160 L310 160 L310 80 L370 80 L370 160 L430 160 L430 100 L490 100 L490 160 L550 160 L550 120 L610 120 L610 160 L670 160 L670 140 L730 140 L730 160" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <text x="18" y="24" fill="#003355" font-size="16">Analog (wave)</text>
+            <text x="18" y="44" fill="#003355" font-size="16">Digital (steps)</text>
+          </svg>
+        </div>
+
+        <div class="card">
+          <h4>Network Topology</h4>
+          <!-- small inline SVG showing devices and routers -->
+          <svg class="illustration" viewBox="0 0 800 240" aria-hidden="true">
+            <rect x="0" y="0" width="800" height="240" fill="#f7fbff" rx="12"/>
+            <circle cx="120" cy="60" r="26" fill="#fffbf0" stroke="#003355" stroke-width="3"/>
+            <text x="100" y="66" fill="#003355" font-size="12">Phone</text>
+            <circle cx="260" cy="60" r="26" fill="#fff8ff" stroke="#003355" stroke-width="3"/>
+            <text x="238" y="66" fill="#003355" font-size="12">Laptop</text>
+            <rect x="400" y="34" width="120" height="50" rx="8" fill="#fff" stroke="#003355" stroke-width="3"/>
+            <text x="420" y="60" fill="#003355" font-size="12">Router</text>
+            <circle cx="600" cy="60" r="26" fill="#fff8f5" stroke="#003355" stroke-width="3"/>
+            <text x="584" y="66" fill="#003355" font-size="12">ISP</text>
+            <path d="M146 60 L400 60" stroke="#0077cc" stroke-width="2" stroke-dasharray="6 6" />
+            <path d="M520 60 L600 60" stroke="#0077cc" stroke-width="2" stroke-dasharray="6 6" />
+            <text x="340" y="120" fill="#003355" font-size="12">Packets may take many paths — redundancy and routing keep data moving.</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Jump In</h2>
+      <div class="grid">
+        <div>
+          <p><strong>Explore the Unit pages</strong> for vocabulary, interactive demos (binary converter, packet path animator), and deeper explanations.</p>
+        </div>
+        <div>
+          <p><strong>Play the interactive game</strong> to experience how policies can affect different types of traffic.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">Created by Shaivi Magadum | Net Neutrality Project</footer>
+</body>
+</html>
+
+
+===== FILE: data.html =====
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Unit 1 — Data | Net Neutrality</title>
+  <link href="styles.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-hero">
+    <h1>Shaivi Magadum</h1>
+    <p>Unit 1 — Data Concepts</p>
+  </header>
+  <nav class="topnav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="data.html">Unit 1: Data</a>
+    <a href="networks.html">Unit 2: Networks</a>
+    <a href="politics.html">Politics</a>
+    <a href="game.html">Interactive Game</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Key Vocabulary (Unit 1)</h2>
+      <ul class="vocab">
+        <li><strong>Bit</strong>: A binary digit (0 or 1).</li>
+        <li><strong>Byte</strong>: 8 bits — a common unit for storing data.</li>
+        <li><strong>Roundoff</strong>: Error that appears when numbers are approximated due to limited bits.</li>
+        <li><strong>Analog Data</strong>: Smooth continuous values (e.g., sound waves).</li>
+        <li><strong>Lossless</strong>: Compression that preserves every bit so the original can be recovered exactly.</li>
+        <li><strong>Lossy</strong>: Compression that discards some information for smaller file sizes (e.g., JPEG, MP3).</li>
+        <li><strong>Metadata</strong>: Data about data — file properties, timestamps, tags.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Interactive: Binary (0–255) → 8-bit representation</h2>
+      <p>Type a number between 0 and 255 to see its 8-bit <em>byte</em> representation and how bits map to bytes.</p>
+      <div class="grid">
+        <div>
+          <input id="numInput" type="number" min="0" max="255" value="42" style="padding:8px;border-radius:8px;border:2px solid #003355;width:100%">
+          <div id="bits" class="card" style="margin-top:12px;font-size:1.15rem;text-align:center"></div>
+        </div>
+        <div>
+          <div class="highlight">
+            <strong>Byte</strong>: 8 bits. Each bit represents a power of two (128→1).
+          </div>
+          <div style="margin-top:12px">
+            <button class="btn" id="toBinary">Show Binary</button>
+            <button class="btn alt" id="randomByte">Random</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Analog → Digital</h2>
+      <p>Analog signals are continuous; digital signals sample and quantize values into bits and bytes. This is how music, images, and video are transmitted across the internet.</p>
+      <!-- Reuse small SVG from index for visual continuity -->
+      <svg class="illustration" viewBox="0 0 800 200" aria-hidden="true">
+        <rect x="0" y="0" width="800" height="200" fill="#f7fbff" rx="12"/>
+        <path d="M10 140 C60 80,140 160,200 100 C260 40,340 140,400 80 C460 20,540 140,600 100 C660 60,740 140,790 100" fill="none" stroke="#0077cc" stroke-width="3" opacity="0.9" />
+        <g stroke="#003355" stroke-width="4">
+          <path d="M10 160 L70 160 L70 120 L130 120 L130 160 L190 160 L190 100 L250 100 L250 160 L310 160 L310 80 L370 80 L370 160 L430 160 L430 100 L490 100 L490 160 L550 160 L550 120 L610 120 L610 160 L670 160 L670 140 L730 140 L730 160" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </section>
+
+    <section class="card">
+      <h2>Lossless vs Lossy</h2>
+      <p>Lossless formats (like PNG or FLAC) keep every bit so original data can be restored. Lossy formats (JPEG, MP3) discard parts of the data to reduce size — useful for bandwidth-limited scenarios but not ideal for archival.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">Created by Shaivi Magadum</footer>
+
+  <script>
+    // Binary converter logic
+    function to8Bit(n){
+      n = Math.max(0, Math.min(255, Math.floor(n) || 0));
+      let bits = [];
+      for(let i=7;i>=0;i--){
+        const mask = 1<<i;
+        bits.push((n & mask) ? '1' : '0');
+      }
+      return bits.join(' ');
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      const numInput = document.getElementById('numInput');
+      const bits = document.getElementById('bits');
+      const toBinary = document.getElementById('toBinary');
+      const randomByte = document.getElementById('randomByte');
+      function render(){
+        const n = parseInt(numInput.value,10)||0;
+        bits.innerHTML = '<div style="font-weight:700">'+n+' → <span style="letter-spacing:6px">'+to8Bit(n)+'</span></div>';
+      }
+      toBinary.addEventListener('click',render);
+      randomByte.addEventListener('click',()=>{numInput.value = Math.floor(Math.random()*256);render();});
+      numInput.addEventListener('input',render);
+      render();
+    });
+  </script>
+</body>
+</html>
+
+
+===== FILE: networks.html =====
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Unit 2 — Networks | Net Neutrality</title>
+  <link href="styles.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-hero">
+    <h1>Shaivi Magadum</h1>
+    <p>Unit 2 — Computer Systems & Networks</p>
+  </header>
+  <nav class="topnav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="data.html">Unit 1: Data</a>
+    <a href="networks.html">Unit 2: Networks</a>
+    <a href="politics.html">Politics</a>
+    <a href="game.html">Interactive Game</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Key Vocabulary (Unit 2)</h2>
+      <ul class="vocab">
+        <li><strong>Computing Device</strong>: e.g., phone, server, sensor.</li>
+        <li><strong>Computer Network</strong>: interconnected devices exchanging data.</li>
+        <li><strong>Path</strong>: the series of connections packets travel on.</li>
+        <li><strong>Protocol</strong>: rules systems follow to communicate.</li>
+        <li><strong>Fault Tolerant</strong>: continues to operate despite failures.</li>
+        <li><strong>Scalability</strong>: ability to grow to handle more devices.</li>
+        <li><strong>Bandwidth</strong>: bits per second; capacity of a path.</li>
+        <li><strong>Packets</strong>: small chunks of messages that travel independently.</li>
+        <li><strong>Routers</strong>: devices that forward packets across networks.</li>
+        <li><strong>DNS</strong>: maps URLs to IP addresses.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Interactive: Packet Path Animator</h2>
+      <p>Click "Find path" to compute a route between two devices and watch a packet travel along that path. This demonstrates how routers forward packets along paths chosen by routing protocols.</p>
+      <div class="card">
+        <div style="display:flex;gap:12px;align-items:center">
+          <label>From: <select id="fromSelect"></select></label>
+          <label>To: <select id="toSelect"></select></label>
+          <button class="btn" id="findPath">Find Path</button>
+          <button class="btn alt" id="resetPath">Reset</button>
+        </div>
+        <div style="margin-top:14px">
+          <svg id="netSvg" viewBox="0 0 800 360" style="width:100%;height:360px;background:#f7fbff;border-radius:12px;border:1px solid #e8f3ff"></svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Internet Structure & Layers</h2>
+      <p>The internet is layered: physical connections, IP routing, transport (TCP/UDP), and application-level protocols (HTTP). Redundancy, fault tolerance, and routing algorithms allow packets to take alternate paths if part of the network fails.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">Created by Shaivi Magadum</footer>
+
+  <script>
+    // Simple graph + BFS path animation
+    document.addEventListener('DOMContentLoaded',()=>{
+      const svg = document.getElementById('netSvg');
+      // nodes with positions
+      const nodes = {
+        A:{x:120,y:90,label:'Phone'},
+        B:{x:260,y:40,label:'Laptop'},
+        C:{x:260,y:160,label:'Tablet'},
+        R1:{x:420,y:90,label:'Router A'},
+        R2:{x:580,y:30,label:'Router B'},
+        R3:{x:580,y:160,label:'Router C'},
+        ISP:{x:720,y:90,label:'ISP'}
+      };
+      const edges = [ ['A','R1'],['B','R1'],['C','R1'],['R1','R2'],['R1','R3'],['R2','ISP'],['R3','ISP'] ];
+      // build svg
+      function draw(){
+        svg.innerHTML = '';
+        // edges
+        edges.forEach(([a,b])=>{
+          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+          line.setAttribute('x1',nodes[a].x);line.setAttribute('y1',nodes[a].y);
+          line.setAttribute('x2',nodes[b].x);line.setAttribute('y2',nodes[b].y);
+          line.setAttribute('stroke','#0077cc');line.setAttribute('stroke-width','3');
+          svg.appendChild(line);
+        });
+        // nodes
+        Object.keys(nodes).forEach(k=>{
+          const n = nodes[k];
+          const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+          const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          circle.setAttribute('cx',n.x);circle.setAttribute('cy',n.y);circle.setAttribute('r',24);
+          circle.setAttribute('fill','#fff');circle.setAttribute('stroke','#003355');circle.setAttribute('stroke-width','3');
+          const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+          text.setAttribute('x',n.x);text.setAttribute('y',n.y+44);text.setAttribute('font-size','12');text.setAttribute('text-anchor','middle');text.setAttribute('fill','#003355');
+          text.textContent = n.label;
+          g.appendChild(circle);g.appendChild(text);
+          svg.appendChild(g);
+        });
+      }
+      draw();
+
+      // populate selects
+      const fromSel = document.getElementById('fromSelect');
+      const toSel = document.getElementById('toSelect');
+      const keys = Object.keys(nodes);
+      keys.forEach(k=>{ const o=document.createElement('option');o.value=k;o.textContent=nodes[k].label+' ('+k+')';fromSel.appendChild(o); });
+      keys.forEach(k=>{ const o=document.createElement('option');o.value=k;o.textContent=nodes[k].label+' ('+k+')';toSel.appendChild(o); });
+      fromSel.value='A';toSel.value='ISP';
+
+      function bfs(start,goal){
+        let q=[start];
+        let prev={};
+        let visited=new Set([start]);
+        while(q.length){
+          let u = q.shift();
+          if(u===goal)break;
+          // neighbors
+          edges.forEach(([a,b])=>{
+            if(a===u && !visited.has(b)){ visited.add(b); prev[b]=u; q.push(b); }
+            if(b===u && !visited.has(a)){ visited.add(a); prev[a]=u; q.push(a); }
+          })
+        }
+        if(!prev[goal] && start!==goal){ return null; }
+        const path=[goal]; let cur=goal; while(cur!==start){ cur=prev[cur]||start; if(path[path.length-1]===cur)break; path.push(cur); if(cur===start)break; }
+        return path.reverse();
+      }
+
+      function animatePath(path){
+        if(!path || path.length<2){ alert('No path found'); return; }
+        // compute points
+        const points = path.map(k=>({x:nodes[k].x,y:nodes[k].y}));
+        // create packet circle
+        const pkt = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        pkt.setAttribute('r',10);pkt.setAttribute('fill','#ff8c42');pkt.setAttribute('cx',points[0].x);pkt.setAttribute('cy',points[0].y);
+        svg.appendChild(pkt);
+        let seg=0; let t=0; const speed = 0.005;
+        function step(){
+          if(seg >= points.length-1){ pkt.remove(); return; }
+          const p0 = points[seg]; const p1 = points[seg+1];
+          t += speed;
+          const x = p0.x + (p1.x-p0.x)*t;
+          const y = p0.y + (p1.y-p0.y)*t;
+          pkt.setAttribute('cx',x);pkt.setAttribute('cy',y);
+          if(t>=1){ seg++; t=0; }
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      document.getElementById('findPath').addEventListener('click',()=>{
+        draw();
+        const from = fromSel.value; const to = toSel.value;
+        if(from===to){ alert('Choose different nodes'); return; }
+        const path = bfs(from,to);
+        animatePath(path);
+      });
+      document.getElementById('resetPath').addEventListener('click',()=>{ draw(); });
+    });
+  </script>
+</body>
+</html>
+
+
+===== FILE: politics.html =====
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Politics & Policy | Net Neutrality</title>
+  <link href="styles.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-hero">
+    <h1>Shaivi Magadum</h1>
+    <p>Political Ramifications of Net Neutrality</p>
+  </header>
+  <nav class="topnav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="data.html">Unit 1: Data</a>
+    <a href="networks.html">Unit 2: Networks</a>
+    <a href="politics.html">Politics</a>
+    <a href="game.html">Interactive Game</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h2>Overview</h2>
+      <p>Net neutrality is both a technical principle and a public policy issue. It impacts competition, free speech, and how businesses and citizens access information.</p>
+    </section>
+
+    <section class="card">
+      <h2>Key Political Questions</h2>
+      <ul>
+        <li>Should ISPs be allowed to prioritize some traffic in exchange for payment?</li>
+        <li>Do regulations ensure fair access, or do they risk stifling infrastructure investment?</li>
+        <li>How are marginalized communities affected when ISPs control access?</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Arguments for Strong Net Neutrality</h2>
+      <ul>
+        <li>Protects free expression — equal access to platforms and news sources.</li>
+        <li>Promotes innovation — startups compete on service, not on payments to ISPs.</li>
+        <li>Prevents anti-competitive behavior by large content providers or ISPs.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Arguments Cited Against Strict Regulation</h2>
+      <ul>
+        <li>ISPs argue that tiered services can fund infrastructure and improve quality for heavy users.</li>
+        <li>Critics say rigid rules may limit flexibility in network management and investment.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Get Involved</h2>
+      <p>Learn about your local representatives, follow technology policy organizations, and read public comments or filings when regulatory actions are proposed. Voting and civic engagement are how policy decisions are shaped.</p>
+      <div class="controls" style="margin-top:12px">
+        <button class="btn" onclick="tooltip('Consider contacting your representatives or joining a public comment period.')">How to act</button>
+        <a class="btn alt" href="index.html">Back to Home</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">Created by Shaivi Magadum</footer>
+</body>
+</html>
+
+
+===== FILE: game.html =====
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Interactive Game — Packet Patrol</title>
+  <link href="styles.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-hero">
+    <h1>Shaivi Magadum</h1>
+    <p>Interactive Game — Packet Patrol</p>
+  </header>
+  <nav class="topnav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="data.html">Unit 1: Data</a>
+    <a href="networks.html">Unit 2: Networks</a>
+    <a href="politics.html">Politics</a>
+    <a href="game.html">Interactive Game</a>
+  </nav>
+
+  <main class="container">
+    <section class="card game-stage">
+      <div class="canvas-wrap card">
+        <canvas id="gameCanvas" width="760" height="420" style="border-radius:10px;background:#f7fbff;display:block"></canvas>
+      </div>
+
+      <aside class="panel card">
+        <h3>Packet Patrol</h3>
+        <p class="small">You are the network manager. Decide whether the network applies a <strong>neutral</strong> policy or lets ISPs <strong>prioritize</strong> certain traffic. Watch how throughput, fairness, and user experience change.</p>
+        <div style="margin-top:12px">
+          <label class="small">Policy:</label>
+          <select id="policySelect" style="width:100%;padding:8px;border-radius:8px;border:2px solid #003355;margin-top:6px">
+            <option value="neutral">Neutral (all packets equal)</option>
+            <option value="prioritize">Prioritize video</option>
+            <option value="throttle_news">Throttle news</option>
+          </select>
+        </div>
+        <div style="margin-top:12px">
+          <label class="small">Spawn rate (packets/sec)</label>
+          <input id="spawnRange" type="range" min="0.5" max="4" step="0.1" value="1.2" style="width:100%">
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn" id="startBtn">Start</button>
+          <button class="btn alt" id="pauseBtn">Pause</button>
+          <button class="btn alt" id="resetBtn">Reset</button>
+        </div>
+        <div style="margin-top:12px">
+          <div><strong>Score:</strong> <span id="score">0</span></div>
+          <div><strong>Throughput:</strong> <span id="throughput">0</span> pkts</div>
+          <div><strong>Fairness:</strong> <span id="fairness">100</span>%</div>
+        </div>
+        <p class="small" style="margin-top:12px">Tips: Try both policies and observe how favoring one traffic type can boost its throughput while reducing fairness for others.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer">Created by Shaivi Magadum</footer>
+
+  <script>
+    // Packet Patrol game - simple educational simulation
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const routerX = 380, routerY = H/2;
+    const entryX = 40;
+    const exitX = 720;
+
+    let packets = [];
+    let lastSpawn = 0;
+    let running = false;
+    let score = 0, throughput = 0, fairness = 100;
+
+    const types = [
+      {id:'video', color:'#ff8c42', weight:1.2},
+      {id:'news', color:'#4091ff', weight:1.0},
+      {id:'startup', color:'#8cffc1', weight:0.9}
+    ];
+
+    function randChoice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    function spawnPacket(){
+      const t = randChoice(types);
+      packets.push({x:entryX,y:50+Math.random()*(H-100), vx:0, vy:0, speed:1.2, type:t, state:'approach'});
+    }
+
+    function reset(){ packets=[]; lastSpawn=0; running=false; score=0; throughput=0; fairness=100; updateStats(); draw(); }
+
+    function updateStats(){ document.getElementById('score').textContent = Math.max(0,Math.round(score)); document.getElementById('throughput').textContent = throughput; document.getElementById('fairness').textContent = Math.max(0,Math.round(fairness)); }
+
+    function drawRouter(){
+      // router box
+      ctx.fillStyle = '#fff'; ctx.strokeStyle='#003355'; ctx.lineWidth=3; roundRect(ctx,routerX-48,routerY-48,96,96,12); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#003355'; ctx.font='14px "Fira Sans Extra Condensed", sans-serif'; ctx.textAlign='center'; ctx.fillText('Router',routerX,routerY+6);
+    }
+
+    function roundRect(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      // lanes
+      ctx.strokeStyle='#cfeaff'; ctx.lineWidth=12; ctx.beginPath(); ctx.moveTo(entryX,80); ctx.lineTo(routerX-60,80); ctx.moveTo(entryX,H-80); ctx.lineTo(routerX-60,H-80); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(routerX+60,80); ctx.lineTo(exitX,80); ctx.moveTo(routerX+60,H-80); ctx.lineTo(exitX,H-80); ctx.stroke();
+      drawRouter();
+      // packets
+      packets.forEach(p=>{
+        ctx.beginPath(); ctx.fillStyle = p.type.color; ctx.arc(p.x,p.y,10,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#023'; ctx.font='10px sans-serif'; ctx.textAlign='center'; ctx.fillText(p.type.id.charAt(0).toUpperCase(),p.x,p.y+4);
+      });
+    }
+
+    function step(dt){
+      const spawnRate = parseFloat(document.getElementById('spawnRange').value); // pkts/sec
+      lastSpawn += dt;
+      if(lastSpawn > 1000/spawnRate){ spawnPacket(); lastSpawn = 0; }
+
+      // policy
+      const policy = document.getElementById('policySelect').value;
+
+      // move packets
+      for(let i=packets.length-1;i>=0;i--){
+        const p = packets[i];
+        if(p.state==='approach'){
+          // move towards router entrance
+          const targetX = routerX-60;
+          p.x += (targetX - p.x) * 0.04 * p.type.weight;
+          // once near, join router queue
+          if(p.x > targetX-6){ p.state='router'; p.queuePos = Math.random(); }
+        } else if(p.state==='router'){
+          // simple throughput model: a limited number pass each frame depending on policy
+          // policy affects which types get to pass faster
+          // compute chance to pass this frame
+          let base = 0.01 * (1 + parseFloat(document.getElementById('spawnRange').value)/2);
+          if(policy==='neutral') base *= 1; 
+          if(policy==='prioritize' && p.type.id==='video') base *= 2.6;
+          if(policy==='throttle_news' && p.type.id==='news') base *= 0.25;
+          // randomly let some pass
+          if(Math.random() < base){ p.state='exit'; throughput++; score += (policy==='neutral'?1: (p.type.id==='video'?1.6:0.6)); }
+        } else if(p.state==='exit'){
+          p.x += (exitX - p.x) * 0.06;
+          if(p.x > exitX-10){ packets.splice(i,1); }
+        }
+      }
+
+      // fairness metric: compute variance of delivered per type (approximation)
+      // this is simple: penalize if one type has much higher delivered than others
+      const counts = {video:0,news:0,startup:0};
+      // we don't store delivered history fully; approximate via throughput distribution: sample packets currently in network as proxy
+      packets.forEach(p => counts[p.type.id]++);
+      // fairness intuition: if counts are balanced fairness ~100, else lower
+      const vals = Object.values(counts); const avg = (vals.reduce((a,b)=>a+b,0)/vals.length)||1;
+      let varsum = vals.reduce((s,v)=>s+(v-avg)*(v-avg),0)/vals.length;
+      fairness = Math.max(10,100 - varsum*12);
+
+      // small score decay to encourage steady performance
+      score *= 0.9998;
+
+      updateStats();
+      draw();
+    }
+
+    let last = 0; function loop(t){ if(!running) { last = t; requestAnimationFrame(loop); return;} const dt = t - last; last = t; step(dt); requestAnimationFrame(loop); }
+
+    document.getElementById('startBtn').addEventListener('click',()=>{ running=true; last = performance.now(); requestAnimationFrame(loop); });
+    document.getElementById('pauseBtn').addEventListener('click',()=>{ running = !running; if(running){ last = performance.now(); } });
+    document.getElementById('resetBtn').addEventListener('click',reset);
+
+    // initialize
+    reset(); draw();
+  </script>
+</body>
+</html>
+
+
+===== END OF PROJECT FILES =====
+
+<!-- Instructions: Copy each "FILE: filename" block above into separate files in your GitHub Pages repo. If you want, I can export these into a single ZIP for download or push to a GitHub repo if you provide access. -->
