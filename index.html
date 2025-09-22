@@ -94,14 +94,12 @@
     }
   </style>
   <script>
-    // Navigation
     function showSection(id) {
       const sections = document.querySelectorAll("main section");
       sections.forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
 
-    // Binary conversion
     function convertToBinary() {
       const input = document.getElementById("binaryInput").value;
       const output = document.getElementById("binaryOutput");
@@ -117,7 +115,6 @@
       output.textContent = num.toString(2).padStart(8, '0');
     }
 
-    // Packet simulation
     function simulatePacket() {
       const hops = ["Router A", "Router B", "Router C", "Destination"];
       let output = "";
@@ -129,7 +126,6 @@
       });
     }
 
-    // Game
     function playGame(mode) {
       const output = document.getElementById("gameOutput");
       let result = "";
@@ -143,7 +139,6 @@
       output.textContent = result;
     }
 
-    // Show home on load
     window.onload = () => showSection('home');
   </script>
 </head>
@@ -176,7 +171,7 @@
       <div class="highlight">
         <p>Net neutrality protects openness and <strong>scalability</strong> of the internet, ensuring innovation and free speech.</p>
       </div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Net-neutrality-symbol.svg" alt="Net Neutrality Symbol">
+      <img src="https://i.imgur.com/wz3kQn1.png" alt="Net Neutrality Symbol">
     </section>
 
     <!-- DATA -->
@@ -199,7 +194,7 @@
       <input type="number" id="binaryInput" placeholder="Enter a number 0–255">
       <button onclick="convertToBinary()">Convert</button>
       <p><strong>Binary:</strong> <span id="binaryOutput"></span></p>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Digital_and_analog_signals.svg/640px-Digital_and_analog_signals.svg.png" alt="Analog vs Digital Data">
+      <img src="https://i.imgur.com/6uNfUOg.png" alt="Analog vs Digital Data">
     </section>
 
     <!-- NETWORKS -->
@@ -217,7 +212,7 @@
       <button onclick="simulatePacket()">Send Message</button>
       <p><strong>Path:</strong> <span id="packetOutput"></span></p>
       <iframe width="560" height="315" src="https://www.youtube.com/embed/7_LPdttKXPc" title="How the Internet Works" frameborder="0" allowfullscreen></iframe>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/Internet_map_1024.jpg" alt="Internet Map">
+      <img src="https://i.imgur.com/9jw4w2D.jpg" alt="Internet Map">
     </section>
 
     <!-- NET NEUTRALITY -->
@@ -237,7 +232,7 @@
           Net neutrality matters because it ensures equal opportunity for startups, protects free speech, and preserves the internet as a platform for knowledge and democracy.
         </p>
       </div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Net_Neutrality_Poster.png" alt="Net Neutrality Poster">
+      <img src="https://i.imgur.com/r5Xe3OQ.jpg" alt="Net Neutrality Poster">
     </section>
 
     <!-- POLITICS -->
@@ -253,7 +248,7 @@
       <div class="highlight">
         <p>Net neutrality policies shape how society accesses information, impacting democracy, economics, and innovation.</p>
       </div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Net_neutrality_protest.jpg" alt="Net Neutrality Protest">
+      <img src="https://i.imgur.com/B0klDM1.jpg" alt="Net Neutrality Protest">
     </section>
 
     <!-- GAME -->
@@ -264,7 +259,7 @@
       <button onclick="playGame('prioritize')">Prioritize Big Companies</button>
       <button onclick="playGame('throttle')">Throttle Certain Services</button>
       <p><strong>Result:</strong> <span id="gameOutput"></span></p>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Internet2_network_map.png" alt="Internet Traffic Map">
+      <img src="https://i.imgur.com/Qo8AhFi.jpg" alt="Internet Traffic Illustration">
     </section>
   </main>
 
