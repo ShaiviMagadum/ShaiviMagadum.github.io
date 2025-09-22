@@ -78,6 +78,13 @@
       margin: 15px 0;
     }
 
+    img, iframe {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
     footer {
       background: #001f4d;
       color: white;
@@ -94,7 +101,7 @@
       document.getElementById(id).classList.add("active");
     }
 
-    // JS for binary conversion, packet sim, and game
+    // Binary conversion
     function convertToBinary() {
       const input = document.getElementById("binaryInput").value;
       const output = document.getElementById("binaryOutput");
@@ -110,6 +117,7 @@
       output.textContent = num.toString(2).padStart(8, '0');
     }
 
+    // Packet simulation
     function simulatePacket() {
       const hops = ["Router A", "Router B", "Router C", "Destination"];
       let output = "";
@@ -121,6 +129,7 @@
       });
     }
 
+    // Game
     function playGame(mode) {
       const output = document.getElementById("gameOutput");
       let result = "";
@@ -146,6 +155,7 @@
       <a onclick="showSection('home')">Home</a>
       <a onclick="showSection('data')">Unit 1: Data</a>
       <a onclick="showSection('networks')">Unit 2: Networks</a>
+      <a onclick="showSection('netneutrality')">Net Neutrality</a>
       <a onclick="showSection('politics')">Politics</a>
       <a onclick="showSection('game')">Game</a>
     </nav>
@@ -166,6 +176,7 @@
       <div class="highlight">
         <p>Net neutrality protects openness and <strong>scalability</strong> of the internet, ensuring innovation and free speech.</p>
       </div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Net-neutrality-symbol.svg" alt="Net Neutrality Symbol">
     </section>
 
     <!-- DATA -->
@@ -188,6 +199,7 @@
       <input type="number" id="binaryInput" placeholder="Enter a number 0–255">
       <button onclick="convertToBinary()">Convert</button>
       <p><strong>Binary:</strong> <span id="binaryOutput"></span></p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Digital_and_analog_signals.svg/640px-Digital_and_analog_signals.svg.png" alt="Analog vs Digital Data">
     </section>
 
     <!-- NETWORKS -->
@@ -204,6 +216,28 @@
       <h3>Packet Simulation</h3>
       <button onclick="simulatePacket()">Send Message</button>
       <p><strong>Path:</strong> <span id="packetOutput"></span></p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/7_LPdttKXPc" title="How the Internet Works" frameborder="0" allowfullscreen></iframe>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/Internet_map_1024.jpg" alt="Internet Map">
+    </section>
+
+    <!-- NET NEUTRALITY -->
+    <section id="netneutrality">
+      <h2>Understanding Net Neutrality</h2>
+      <p>
+        Net neutrality is a principle that ensures all data on the internet is treated equally. This means that Internet Service Providers (ISPs) cannot discriminate or charge differently based on user, content, website, or platform.
+      </p>
+      <p>
+        Without net neutrality, ISPs could prioritize traffic from large corporations, slow down services from smaller competitors, or even block access to certain sites. This threatens the open nature of the internet and limits user choice.
+      </p>
+      <p>
+        The concept gained global attention in the early 2000s as debates over internet regulation intensified. Supporters argue that neutrality keeps the internet <strong>fault tolerant</strong>, <strong>scalable</strong>, and fair for innovation, while opponents claim ISPs need flexibility to manage <strong>bandwidth</strong>.
+      </p>
+      <div class="highlight">
+        <p>
+          Net neutrality matters because it ensures equal opportunity for startups, protects free speech, and preserves the internet as a platform for knowledge and democracy.
+        </p>
+      </div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Net_Neutrality_Poster.png" alt="Net Neutrality Poster">
     </section>
 
     <!-- POLITICS -->
@@ -219,6 +253,7 @@
       <div class="highlight">
         <p>Net neutrality policies shape how society accesses information, impacting democracy, economics, and innovation.</p>
       </div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Net_neutrality_protest.jpg" alt="Net Neutrality Protest">
     </section>
 
     <!-- GAME -->
@@ -229,6 +264,7 @@
       <button onclick="playGame('prioritize')">Prioritize Big Companies</button>
       <button onclick="playGame('throttle')">Throttle Certain Services</button>
       <p><strong>Result:</strong> <span id="gameOutput"></span></p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Internet2_network_map.png" alt="Internet Traffic Map">
     </section>
   </main>
 
