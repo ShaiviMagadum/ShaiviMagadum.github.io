@@ -1,268 +1,234 @@
-Below are the complete files you’ll need for your GitHub Pages site. Save each one into your repository root with the exact filenames.
-
----
-
-**index.html**
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Net Neutrality - Home</title>
+  <title>Shaivi Magadum - Net Neutrality</title>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <style>
+    body {
+      font-family: 'Fira Sans Extra Condensed', sans-serif;
+      background-color: #e6f2ff;
+      color: #001f4d;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #001f4d;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.2em;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #cce0ff;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      border-bottom: 2px solid #001f4d;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+    button {
+      background: #001f4d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      font-family: 'Fira Sans Extra Condensed', sans-serif;
+    }
+    button:hover {
+      background: #004080;
+    }
+
+    .highlight {
+      background: #cce0ff;
+      padding: 10px;
+      border-left: 5px solid #001f4d;
+      margin: 15px 0;
+    }
+
+    footer {
+      background: #001f4d;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
+  <script>
+    // Navigation
+    function showSection(id) {
+      const sections = document.querySelectorAll("main section");
+      sections.forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    // JS for binary conversion, packet sim, and game
+    function convertToBinary() {
+      const input = document.getElementById("binaryInput").value;
+      const output = document.getElementById("binaryOutput");
+      if (input === "") {
+        output.textContent = "Please enter a number.";
+        return;
+      }
+      const num = parseInt(input);
+      if (num < 0 || num > 255) {
+        output.textContent = "Number must be between 0 and 255.";
+        return;
+      }
+      output.textContent = num.toString(2).padStart(8, '0');
+    }
+
+    function simulatePacket() {
+      const hops = ["Router A", "Router B", "Router C", "Destination"];
+      let output = "";
+      hops.forEach((hop, i) => {
+        setTimeout(() => {
+          output += hop + " → ";
+          document.getElementById("packetOutput").textContent = output.slice(0, -2);
+        }, i * 800);
+      });
+    }
+
+    function playGame(mode) {
+      const output = document.getElementById("gameOutput");
+      let result = "";
+      if (mode === "neutral") {
+        result = "All traffic flows equally. Users are happy and innovation thrives!";
+      } else if (mode === "prioritize") {
+        result = "You prioritized big companies. Small startups struggle, and users complain.";
+      } else if (mode === "throttle") {
+        result = "You throttled certain services. Users are frustrated, competition suffers.";
+      }
+      output.textContent = result;
+    }
+
+    // Show home on load
+    window.onload = () => showSection('home');
+  </script>
 </head>
 <body>
   <header>
     <h1>Shaivi Magadum</h1>
     <p>Exploring Net Neutrality and the Future of Technology</p>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="data.html">Unit 1: Data</a>
-      <a href="networks.html">Unit 2: Networks</a>
-      <a href="politics.html">Politics</a>
-      <a href="game.html">Game</a>
+      <a onclick="showSection('home')">Home</a>
+      <a onclick="showSection('data')">Unit 1: Data</a>
+      <a onclick="showSection('networks')">Unit 2: Networks</a>
+      <a onclick="showSection('politics')">Politics</a>
+      <a onclick="showSection('game')">Game</a>
     </nav>
   </header>
 
   <main>
-    <section>
+    <!-- HOME -->
+    <section id="home" class="active">
       <h2>My Future Goals</h2>
       <p>
-        After high school, I want to pursue a career in <strong>molecular biology</strong>, <strong>biotechnology</strong>, or <strong>computer science</strong>. These fields connect data, computing devices, and real-world innovation in ways that will shape the future.
+        After high school, I want to pursue a career in <strong>molecular biology</strong>, <strong>biotechnology</strong>, or <strong>computer science</strong>.
       </p>
-    </section>
-
-    <section>
       <h2>What is Net Neutrality?</h2>
       <p>
-        Net neutrality is the principle that Internet Service Providers (ISPs) must treat all data on the internet equally. It means that <strong>packets</strong> of data—whether video, music, or text—should not be blocked, throttled, or given priority based on content, sender, or receiver.
+        Net neutrality is the principle that Internet Service Providers (ISPs) must treat all data equally. 
+        It means that <strong>packets</strong> of data—whether video, music, or text—should not be blocked, throttled, or given priority.
       </p>
       <div class="highlight">
-        <p>Net neutrality protects the openness and <strong>scalability</strong> of the internet, ensuring that innovation and free speech are preserved.</p>
+        <p>Net neutrality protects openness and <strong>scalability</strong> of the internet, ensuring innovation and free speech.</p>
       </div>
     </section>
 
-    <section>
-      <h2>Explore More</h2>
-      <p>Use the navigation bar above to explore Unit 1 (Data), Unit 2 (Networks), Politics, and try out an interactive Net Neutrality Game!</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Created by Shaivi Magadum | Net Neutrality Project</p>
-  </footer>
-</body>
-</html>
-```
-
----
-
-**data.html**
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit 1: Data Concepts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <header>
-    <h1>Unit 1: Data Concepts</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="data.html">Unit 1: Data</a>
-      <a href="networks.html">Unit 2: Networks</a>
-      <a href="politics.html">Politics</a>
-      <a href="game.html">Game</a>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h2>Key Vocabulary</h2>
-      <ul>
-        <li><strong>Bit</strong>: The smallest unit of data, either 0 or 1.</li>
-        <li><strong>Byte</strong>: A sequence of 8 bits, used to store information.</li>
-        <li><strong>Roundoff</strong>: Errors that occur when limited bits can’t perfectly represent a number.</li>
-        <li><strong>Analog Data</strong>: Smoothly changing values, like sound or light.</li>
-        <li><strong>Lossless</strong>: Compression that preserves all data exactly.</li>
-        <li><strong>Lossy</strong>: Compression that discards some data for smaller file sizes.</li>
-        <li><strong>Metadata</strong>: Data about data, like a photo’s resolution or author.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Interactive: Binary Converter</h2>
-      <p>Type a number (0–255) to see its 8-bit binary representation:</p>
-      <input type="number" id="binaryInput" min="0" max="255">
+    <!-- DATA -->
+    <section id="data">
+      <h2>Unit 1: Data</h2>
+      <p>
+        Data on the internet is made of <strong>bits</strong> (0s and 1s). A <strong>byte</strong> is 8 bits. 
+        Sometimes <strong>roundoff</strong> errors occur when precision is lost.
+      </p>
+      <p>
+        <strong>Analog data</strong> changes smoothly (like sound). To store it digitally, we sample and encode it.
+      </p>
+      <p>
+        Compression helps: <strong>lossless</strong> compression preserves everything, while <strong>lossy</strong> removes some data.
+      </p>
+      <p>
+        <strong>Metadata</strong> is "data about data," like file size or author.
+      </p>
+      <h3>Try it: Convert Number to Binary</h3>
+      <input type="number" id="binaryInput" placeholder="Enter a number 0–255">
       <button onclick="convertToBinary()">Convert</button>
-      <p id="binaryOutput"></p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Created by Shaivi Magadum | Net Neutrality Project</p>
-  </footer>
-</body>
-</html>
-```
-
----
-
-**networks.html**
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit 2: Computer Systems & Networks</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <header>
-    <h1>Unit 2: Computer Systems & Networks</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="data.html">Unit 1: Data</a>
-      <a href="networks.html">Unit 2: Networks</a>
-      <a href="politics.html">Politics</a>
-      <a href="game.html">Game</a>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h2>Key Vocabulary</h2>
-      <ul>
-        <li><strong>Computing Device</strong>: Any device that can run a program.</li>
-        <li><strong>Computer Network</strong>: A group of devices that exchange data.</li>
-        <li><strong>Protocol</strong>: Rules for how systems communicate.</li>
-        <li><strong>Fault Tolerant</strong>: A system that works even when parts fail.</li>
-        <li><strong>Scalability</strong>: Ability to grow and handle more demand.</li>
-        <li><strong>Bandwidth</strong>: Maximum data transfer rate.</li>
-        <li><strong>Packets</strong>: Small pieces of data messages are split into.</li>
-        <li><strong>Routers</strong>: Devices that forward packets along the fastest path.</li>
-        <li><strong>DNS</strong>: Translates domain names into IP addresses.</li>
-        <li><strong>HTTP</strong>: Protocol for accessing the World Wide Web.</li>
-      </ul>
+      <p><strong>Binary:</strong> <span id="binaryOutput"></span></p>
     </section>
 
-    <section>
-      <h2>Interactive: Packet Path</h2>
-      <p>Click the button to simulate a packet traveling through routers:</p>
-      <button onclick="simulatePacket()">Send Packet</button>
-      <p id="packetOutput"></p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Created by Shaivi Magadum | Net Neutrality Project</p>
-  </footer>
-</body>
-</html>
-```
-
----
-
-**politics.html**
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Net Neutrality Politics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <header>
-    <h1>Political Ramifications of Net Neutrality</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="data.html">Unit 1: Data</a>
-      <a href="networks.html">Unit 2: Networks</a>
-      <a href="politics.html">Politics</a>
-      <a href="game.html">Game</a>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h2>Why Politics Matter</h2>
+    <!-- NETWORKS -->
+    <section id="networks">
+      <h2>Unit 2: Networks</h2>
       <p>
-        Net neutrality is a deeply political issue. Without protections, ISPs could prioritize some services over others, charging more for access or throttling certain sites. This affects democracy, competition, and free speech.
+        A <strong>computing device</strong> connects to a <strong>computer network</strong>, sending data in <strong>packets</strong> along a <strong>path</strong>. 
+        Routers pick the fastest route. Protocols like <strong>TCP</strong>, <strong>UDP</strong>, and <strong>HTTP</strong> guide communication.
       </p>
-    </section>
-
-    <section>
-      <h2>What You Can Do</h2>
-      <ul>
-        <li>Stay informed by following FCC rulings and news updates.</li>
-        <li>Support organizations advocating for an open internet.</li>
-        <li>Write to representatives about keeping the internet fair and neutral.</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    <p>Created by Shaivi Magadum | Net Neutrality Project</p>
-  </footer>
-</body>
-</html>
-```
-
----
-
-**game.html**
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Net Neutrality Game</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <header>
-    <h1>Packet Patrol: Net Neutrality Game</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="data.html">Unit 1: Data</a>
-      <a href="networks.html">Unit 2: Networks</a>
-      <a href="politics.html">Politics</a>
-      <a href="game.html">Game</a>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h2>Instructions</h2>
       <p>
-        In this game, you are an ISP. Choose whether to treat traffic neutrally, prioritize certain sites, or throttle them, and see how it affects users.
+        The internet is <strong>fault tolerant</strong> and designed with <strong>redundancy</strong>, so if one path fails, data takes another. 
+        Its <strong>scalability</strong> allows billions of devices.
       </p>
+      <h3>Packet Simulation</h3>
+      <button onclick="simulatePacket()">Send Message</button>
+      <p><strong>Path:</strong> <span id="packetOutput"></span></p>
     </section>
 
-    <section>
-      <h2>Play</h2>
-      <button onclick="playGame('neutral')">Neutral</button>
-      <button onclick="playGame('prioritize')">Prioritize</button>
-      <button onclick="playGame('throttle')">Throttle</button>
-      <p id="gameOutput"></p>
+    <!-- POLITICS -->
+    <section id="politics">
+      <h2>Political Ramifications</h2>
+      <p>
+        Without net neutrality, ISPs could favor some websites by giving them higher <strong>bandwidth</strong> or throttling others. 
+        This threatens competition and free expression.
+      </p>
+      <p>
+        Governments debate how <strong>protocols</strong> and laws should regulate ISPs, balancing business interests with fairness.
+      </p>
+      <div class="highlight">
+        <p>Net neutrality policies shape how society accesses information, impacting democracy, economics, and innovation.</p>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game">
+      <h2>Interactive Net Neutrality Game</h2>
+      <p>Choose how to manage internet traffic as an ISP:</p>
+      <button onclick="playGame('neutral')">Treat All Traffic Equally</button>
+      <button onclick="playGame('prioritize')">Prioritize Big Companies</button>
+      <button onclick="playGame('throttle')">Throttle Certain Services</button>
+      <p><strong>Result:</strong> <span id="gameOutput"></span></p>
     </section>
   </main>
 
@@ -271,122 +237,3 @@ Below are the complete files you’ll need for your GitHub Pages site. Save each
   </footer>
 </body>
 </html>
-```
-
----
-
-**styles.css**
-```css
-body {
-  font-family: 'Fira Sans Extra Condensed', sans-serif;
-  background-color: #e6f2ff;
-  color: #001f4d;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-}
-header {
-  background: #001f4d;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-header h1 {
-  margin: 0;
-  font-size: 2em;
-}
-nav a {
-  color: white;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: 600;
-}
-nav a:hover {
-  text-decoration: underline;
-}
-main {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-h2 {
-  border-bottom: 2px solid #001f4d;
-  padding-bottom: 5px;
-  margin-top: 30px;
-}
-button {
-  background: #001f4d;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-button:hover {
-  background: #004080;
-}
-.highlight {
-  background: #cce0ff;
-  padding: 10px;
-  border-left: 5px solid #001f4d;
-  margin: 15px 0;
-}
-footer {
-  background: #001f4d;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  margin-top: 30px;
-}
-```
-
----
-
-**script.js**
-```javascript
-// Binary converter for Unit 1
-function convertToBinary() {
-  const input = document.getElementById("binaryInput").value;
-  const output = document.getElementById("binaryOutput");
-  if (input === "") {
-    output.textContent = "Please enter a number.";
-    return;
-  }
-  const num = parseInt(input);
-  if (num < 0 || num > 255) {
-    output.textContent = "Number must be between 0 and 255.";
-    return;
-  }
-  output.textContent = num.toString(2).padStart(8, '0');
-}
-
-// Packet simulation for Unit 2
-function simulatePacket() {
-  const hops = ["Router A", "Router B", "Router C", "Destination"];
-  let output = "";
-  hops.forEach((hop, i) => {
-    setTimeout(() => {
-      output += hop + " → ";
-      document.getElementById("packetOutput").textContent = output.slice(0, -2);
-    }, i * 800);
-  });
-}
-
-// Game for net neutrality
-function playGame(mode) {
-  const output = document.getElementById("gameOutput");
-  let result = "";
-  if (mode === "neutral") {
-    result = "All traffic flows equally. Users are happy and innovation thrives!";
-  } else if (mode === "prioritize") {
-    result = "You prioritized big companies. Small startups struggle, and users complain.";
-  } else if (mode === "throttle") {
-    result = "You throttled certain services. Users are frustrated, competition suffers.";
-  }
-  output.textContent = result;
-}
-```
-
----
-
-✅ Now you can copy these into your GitHub repository. Once you push and enable GitHub Pages, all links will work across pages.
